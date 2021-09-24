@@ -1,4 +1,4 @@
-package sqlutils
+package sqlutil
 
 func Contains(a []string, x string) bool {
 	for _, n := range a {

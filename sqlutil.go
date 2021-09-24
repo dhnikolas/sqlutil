@@ -1,4 +1,4 @@
-package sqlutils
+package sqlutil
 
 import (
 	"fmt"
