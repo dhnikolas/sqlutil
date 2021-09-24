@@ -1,1 +1,1 @@
-module "sqlutil"
+module github.com/dhnikolas/sqlutil
