@@ -23,10 +23,9 @@ func (f *Filter) Add (p Param) {
 	f.params = append(f.params, p)
 }
 
-func (f *Filter) PrepareFilter() (string, string, []interface{}) {
-	var whereStatement string
+func (f *Filter) PrepareFilter() (string, []interface{}) {
+	var statement string
 	var filterString string
-	var limitOffsetString string
 	var queryArgs []interface{}
 	if len(f.params) > 0 {
 		for i, p := range f.params {
@@ -35,19 +34,19 @@ func (f *Filter) PrepareFilter() (string, string, []interface{}) {
 			queryArgs = append(queryArgs, p.Value)
 		}
 		filterString = strings.Trim(filterString, " and")
-		whereStatement = "where " + filterString
+		statement = "where " + filterString
 	}
 	if f.Limit > 0 {
-		limitOffsetString += fmt.Sprintf(" limit $%d ", len(queryArgs) + 1)
+		statement += fmt.Sprintf(" limit $%d ", len(queryArgs) + 1)
 		queryArgs = append(queryArgs, f.Limit)
 	}
 
 	if f.Offset > 0 {
-		limitOffsetString += fmt.Sprintf(" offset $%d ", len(queryArgs) + 1)
+		statement += fmt.Sprintf(" offset $%d ", len(queryArgs) + 1)
 		queryArgs = append(queryArgs, f.Offset)
 	}
 
-	return whereStatement, limitOffsetString, queryArgs
+	return statement, queryArgs
 }
 
 func (f *Filter) condition(condition string, index string) string {
